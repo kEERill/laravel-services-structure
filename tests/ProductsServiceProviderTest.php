@@ -7,7 +7,6 @@ use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Excepti
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Listeners\WorkWhenProductCreatedListener;
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Contracts\CreateProductInterface;
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\DataTransferObjects\ProductData;
-
 use function Pest\Laravel\get;
 
 it('get replace subservice into testing subservices', function () {
@@ -22,13 +21,13 @@ it('check apply service migrations', function () {
     $this->assertArrayHasKey('create_products_table', $migrator->getMigrationFiles($migrator->paths()));
 });
 
-it('get product by id from controller', function() {
+it('get product by id from controller', function () {
     get('products/1')
         ->assertOk()
         ->assertJsonPath('data.id', 1);
 });
 
-it('test listener to events', function() {
+it('test listener to events', function () {
     Event::fake();
 
     Event::assertListening(
@@ -37,7 +36,7 @@ it('test listener to events', function() {
     );
 });
 
-it('run service command', function() {
+it('run service command', function () {
     $this->artisan('products:test')
         ->assertSuccessful();
 });

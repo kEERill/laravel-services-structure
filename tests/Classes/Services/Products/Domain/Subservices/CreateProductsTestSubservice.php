@@ -6,11 +6,10 @@ use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Excepti
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Contracts\CreateProductInterface;
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\DataTransferObjects\ProductData;
 
-final class CreateProductsTestSubservice
-    implements CreateProductInterface
+final class CreateProductsTestSubservice implements CreateProductInterface
 {
     /**
-     * @param ProductData $productData
+     * @param  ProductData  $productData
      * @return ProductData
      *
      * @throws NotAllowedTestingException

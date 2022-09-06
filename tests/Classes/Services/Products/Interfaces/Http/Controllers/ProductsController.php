@@ -9,8 +9,8 @@ use KEERill\ServiceStructure\Tests\Classes\Services\Products\Interfaces\Http\Res
 final class ProductsController
 {
     /**
-     * @param GetProductByIdInterface $subservice
-     * @param int $productId
+     * @param  GetProductByIdInterface  $subservice
+     * @param  int  $productId
      * @return JsonResource
      */
     public function get(GetProductByIdInterface $subservice, int $productId): JsonResource

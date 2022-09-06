@@ -6,5 +6,7 @@ use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Events\
 
 final class WorkWhenProductCreatedListener
 {
-    public function handle(ProductCreatedEvent $event): void {}
+    public function handle(ProductCreatedEvent $event): void
+    {
+    }
 }

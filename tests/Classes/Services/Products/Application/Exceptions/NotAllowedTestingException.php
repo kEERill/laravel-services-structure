@@ -5,4 +5,5 @@ namespace KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\E
 use Exception;
 
 final class NotAllowedTestingException extends Exception
-{}
+{
+}

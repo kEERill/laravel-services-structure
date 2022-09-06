@@ -8,5 +8,6 @@ final class ProductCreatedEvent
 {
     public function __construct(
         public ProductData $product
-    ) {}
+    ) {
+    }
 }

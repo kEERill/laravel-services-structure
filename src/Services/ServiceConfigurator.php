@@ -38,7 +38,8 @@ final class ServiceConfigurator
 
     public function __construct(
         protected string $servicePath
-    ) {}
+    ) {
+    }
 
     /**
      * @return array
@@ -89,13 +90,13 @@ final class ServiceConfigurator
     }
 
     /**
-     * @param array $subServices
+     * @param  array  $subServices
      * @return $this
      */
     public function usingSubservices(array $subServices): self
     {
         $subServices = array_map(
-            fn($subService) => Arr::wrap($subService),
+            fn ($subService) => Arr::wrap($subService),
             $subServices
         );
 
@@ -107,49 +108,53 @@ final class ServiceConfigurator
     }
 
     /**
-     * @param array $listeners
+     * @param  array  $listeners
      * @return $this
      */
     public function usingListeners(array $listeners): self
     {
         $this->listeners = $listeners;
+
         return $this;
     }
 
     /**
-     * @param array $commands
+     * @param  array  $commands
      * @return $this
      */
     public function usingCommands(array $commands): self
     {
         $this->commands = $commands;
+
         return $this;
     }
 
     /**
-     * @param string $namespace
+     * @param  string  $namespace
      * @return $this
      */
     public function usingMigrations(string $namespace = 'Application\\Database\\Migrations'): self
     {
-        $this->migrationsNamespace = $this->servicePath . DIRECTORY_SEPARATOR . $namespace;
+        $this->migrationsNamespace = $this->servicePath.DIRECTORY_SEPARATOR.$namespace;
+
         return $this;
     }
 
     /**
-     * @param string $file
+     * @param  string  $file
      * @return $this
      */
     public function usingRoutes(string $file = 'routes.php'): self
     {
-        $this->routerFile = $this->servicePath . DIRECTORY_SEPARATOR  . $file;
+        $this->routerFile = $this->servicePath.DIRECTORY_SEPARATOR.$file;
+
         return $this;
     }
 
     /**
-     * @param string $contract
-     * @param string $subService
-     * @param string|null $testSubService
+     * @param  string  $contract
+     * @param  string  $subService
+     * @param  string|null  $testSubService
      * @return $this
      */
     protected function addSubservice(string $contract, string $subService, string $testSubService = null): self

@@ -6,11 +6,10 @@ use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Cont
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Contracts\GetProductByIdInterface;
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\DataTransferObjects\ProductData;
 
-final class ProductsSubservice
-    implements GetProductByIdInterface, CreateProductInterface
+final class ProductsSubservice implements GetProductByIdInterface, CreateProductInterface
 {
     /**
-     * @param ProductData $productData
+     * @param  ProductData  $productData
      * @return ProductData
      */
     public function createProduct(ProductData $productData): ProductData

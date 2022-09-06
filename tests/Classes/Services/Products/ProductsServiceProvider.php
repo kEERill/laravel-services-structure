@@ -20,10 +20,10 @@ final class ProductsServiceProvider extends AbstractServiceProvider
     protected array $subServices = [
         CreateProductInterface::class => [
             ProductsSubservice::class,
-            CreateProductsTestSubservice::class
+            CreateProductsTestSubservice::class,
         ],
 
-        GetProductByIdInterface::class => ProductsSubservice::class
+        GetProductByIdInterface::class => ProductsSubservice::class,
     ];
 
     /**
@@ -31,15 +31,15 @@ final class ProductsServiceProvider extends AbstractServiceProvider
      */
     protected array $listeners = [
         ProductCreatedEvent::class => [
-            WorkWhenProductCreatedListener::class
-        ]
+            WorkWhenProductCreatedListener::class,
+        ],
     ];
 
     /**
      * @var class-string[]
      */
     protected array $commands = [
-        ProductsTestCommand::class
+        ProductsTestCommand::class,
     ];
 
     /**

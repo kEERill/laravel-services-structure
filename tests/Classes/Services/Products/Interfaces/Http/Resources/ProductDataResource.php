@@ -14,7 +14,7 @@ final class ProductDataResource extends JsonResource
     public $resource;
 
     /**
-     * @param ProductData $resource
+     * @param  ProductData  $resource
      */
     public function __construct(ProductData $resource)
     {
@@ -22,14 +22,14 @@ final class ProductDataResource extends JsonResource
     }
 
     /**
-     * @param  Request $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request): array
     {
         return [
             'id' => $this->resource->id,
-            'title' => $this->resource->title
+            'title' => $this->resource->title,
         ];
     }
 }

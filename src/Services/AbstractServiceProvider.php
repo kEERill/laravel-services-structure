@@ -63,7 +63,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
     abstract protected function configureService(ServiceConfigurator $serviceConfigurator): void;
 
     /**
-     * @param array $configureSubServices
+     * @param  array  $configureSubServices
      * @return void
      */
     private function registerSubservices(array $configureSubServices): void
@@ -74,7 +74,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
     }
 
     /**
-     * @param array $configureListeners
+     * @param  array  $configureListeners
      * @return void
      */
     private function registerListeners(array $configureListeners): void
@@ -92,6 +92,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
     private function getServicePath(): string
     {
         $reflector = new ReflectionClass(get_class($this));
+
         return dirname($reflector->getFileName());
     }
 }
