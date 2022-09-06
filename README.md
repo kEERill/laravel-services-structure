@@ -13,13 +13,6 @@ You can install the package via composer:
 composer require keerill/laravel-services-structure
 ```
 
-## Usage
-
-```php
-$serviceStructure = new KEERill\ServiceStructure();
-echo $serviceStructure->echoPhrase('Hello, KEERill!');
-```
-
 ## Testing
 
 ```bash
