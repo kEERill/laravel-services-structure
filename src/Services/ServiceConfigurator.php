@@ -133,7 +133,7 @@ final class ServiceConfigurator
      * @param  string  $namespace
      * @return $this
      */
-    public function usingMigrations(string $namespace = 'Application\\Database\\Migrations'): self
+    public function usingMigrations(string $namespace = 'Application/Database/Migrations'): self
     {
         $this->migrationsNamespace = $this->servicePath.DIRECTORY_SEPARATOR.$namespace;
 
