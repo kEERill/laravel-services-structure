@@ -40,3 +40,8 @@ it('run service command', function () {
     $this->artisan('products:test')
         ->assertSuccessful();
 });
+
+it('get config values', function () {
+    expect(config('services.products.pagination'))
+        ->toBe(10);
+});

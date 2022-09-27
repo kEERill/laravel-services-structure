@@ -53,6 +53,7 @@ final class ProductsServiceProvider extends AbstractServiceProvider
             ->usingListeners($this->listeners)
             ->usingCommands($this->commands)
             ->usingMigrations()
+            ->usingConfig('products')
             ->usingRoutes();
     }
 }

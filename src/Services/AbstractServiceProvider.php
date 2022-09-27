@@ -45,6 +45,13 @@ abstract class AbstractServiceProvider extends ServiceProvider
             $this->commands($this->serviceConfigurator->getCommands());
         }
 
+        $config = $this->serviceConfigurator
+            ->getConfig();
+
+        if ($config != null) {
+            $this->mergeConfigFrom($this->serviceConfigurator->getConfigFile(), "services.$config");
+        }
+
         $this->registerListeners($this->serviceConfigurator->getListeners());
     }
 

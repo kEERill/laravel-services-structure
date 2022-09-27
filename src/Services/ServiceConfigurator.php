@@ -36,6 +36,11 @@ final class ServiceConfigurator
      */
     protected string|null $routerFile = null;
 
+    /**
+     * @var string|null
+     */
+    protected string|null $config = null;
+
     public function __construct(
         protected string $servicePath
     ) {
@@ -87,6 +92,22 @@ final class ServiceConfigurator
     public function getRouterFile(): ?string
     {
         return $this->routerFile;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfigFile(): string
+    {
+        return $this->servicePath . DIRECTORY_SEPARATOR . 'config.php';
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getConfig(): ?string
+    {
+        return $this->config;
     }
 
     /**
@@ -148,6 +169,16 @@ final class ServiceConfigurator
     {
         $this->routerFile = $this->servicePath.DIRECTORY_SEPARATOR.$file;
 
+        return $this;
+    }
+
+    /**
+     * @param string $serviceName
+     * @return $this
+     */
+    public function usingConfig(string $serviceName): self
+    {
+        $this->config = $serviceName;
         return $this;
     }
 
