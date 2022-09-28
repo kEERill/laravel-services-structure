@@ -163,10 +163,10 @@ abstract class AbstractServiceProvider extends ServiceProvider
         $rootNamespace = $this->getSubservicesNamespace();
 
         if (is_dir($subservicesPath)) {
-            config(
-                "services-structure.actions.$rootNamespace",
-                $actions = $this->getActions($rootNamespace, $subservicesPath)
-            );
+            $actions = $this->getActions($rootNamespace, $subservicesPath);
+
+            config()
+                ->set("services-structure.actions.$rootNamespace", $actions);
 
             $this->registerActions($actions);
         }
