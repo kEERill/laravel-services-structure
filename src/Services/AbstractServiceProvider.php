@@ -160,11 +160,29 @@ abstract class AbstractServiceProvider extends ServiceProvider
     private function registerAnnotationsSubservices(): void
     {
         $subservicesPath = $this->getSubservicesPath();
+        $rootNamespace = $this->getSubservicesNamespace();
 
         if (is_dir($subservicesPath)) {
-            $this->registerActions(
-                ActionRegistrar::getActionsByService($this->getSubservicesNamespace(), $subservicesPath)
+            config(
+                "services-structure.actions.$rootNamespace",
+                $actions = $this->getActions($rootNamespace, $subservicesPath)
             );
+
+            $this->registerActions($actions);
         }
+    }
+
+    /**
+     * @param string $rootNamespace
+     * @param string $subservicesPath
+     * @return array<class-string, class-string>
+     *
+     * @throws ReflectionException
+     */
+    private function getActions(string $rootNamespace, string $subservicesPath): array
+    {
+        return config()->has("services-structure.actions.$rootNamespace")
+            ? config("services-structure.actions.$rootNamespace")
+            : ActionRegistrar::getActionsByService($rootNamespace, $subservicesPath);
     }
 }
