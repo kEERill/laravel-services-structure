@@ -2,9 +2,14 @@
 
 namespace KEERill\ServiceStructure\Services;
 
+use ReflectionClass;
+use ReflectionException;
+use Illuminate\Support\Str;
+use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
-use ReflectionClass;
+use KEERill\ServiceStructure\Actions\ActionRegistrar;
+use KEERill\ServiceStructure\Actions\ClassActionAttribute;
 
 abstract class AbstractServiceProvider extends ServiceProvider
 {
@@ -14,17 +19,37 @@ abstract class AbstractServiceProvider extends ServiceProvider
     private ServiceConfigurator $serviceConfigurator;
 
     /**
+     * @var string
+     */
+    private string $servicePath;
+
+    /**
+     * @param $app
      * @return void
+     */
+    public function __construct($app)
+    {
+        parent::__construct($app);
+
+        $this->servicePath = $this->getServicePath();
+    }
+
+    /**
+     * @return void
+     *
+     * @throws ReflectionException
      */
     public function register(): void
     {
         $this->serviceConfigurator = $this->createConfiguration();
         $this->configureService($this->serviceConfigurator);
 
-        $this->registerSubservices($this->serviceConfigurator->getSubServices());
+        $this->registerAnnotationsSubservices();
+
+        $this->registerActions($this->serviceConfigurator->getSubServices());
 
         if ($this->app->runningUnitTests()) {
-            $this->registerSubservices($this->serviceConfigurator->getTestingSubService());
+            $this->registerActions($this->serviceConfigurator->getTestingSubService());
         }
     }
 
@@ -60,7 +85,7 @@ abstract class AbstractServiceProvider extends ServiceProvider
      */
     private function createConfiguration(): ServiceConfigurator
     {
-        return new ServiceConfigurator($this->getServicePath());
+        return new ServiceConfigurator($this->servicePath);
     }
 
     /**
@@ -70,12 +95,12 @@ abstract class AbstractServiceProvider extends ServiceProvider
     abstract protected function configureService(ServiceConfigurator $serviceConfigurator): void;
 
     /**
-     * @param  array  $configureSubServices
+     * @param  array  $actions
      * @return void
      */
-    private function registerSubservices(array $configureSubServices): void
+    private function registerActions(array $actions): void
     {
-        foreach ($configureSubServices as $contract => $subService) {
+        foreach ($actions as $contract => $subService) {
             $this->app->bind($contract, $subService);
         }
     }
@@ -101,5 +126,45 @@ abstract class AbstractServiceProvider extends ServiceProvider
         $reflector = new ReflectionClass(get_class($this));
 
         return dirname($reflector->getFileName());
+    }
+
+    /**
+     * @return string
+     */
+    private function getSubservicesPath(): string
+    {
+        return $this->servicePath . DIRECTORY_SEPARATOR .'Domain' . DIRECTORY_SEPARATOR . 'Subservices';
+    }
+
+    /**
+     * @return string
+     */
+    private function getRootNamespace(): string
+    {
+        return Str::replaceLast('\\' . class_basename($this), '', get_class($this));
+    }
+
+    /**
+     * @return string
+     */
+    private function getSubservicesNamespace(): string
+    {
+        return $this->getRootNamespace() . '\\Domain\\Subservices';
+    }
+
+    /**
+     * @return void
+     *
+     * @throws ReflectionException
+     */
+    private function registerAnnotationsSubservices(): void
+    {
+        $subservicesPath = $this->getSubservicesPath();
+
+        if (is_dir($subservicesPath)) {
+            $this->registerActions(
+                ActionRegistrar::getActionsByService($this->getSubservicesNamespace(), $subservicesPath)
+            );
+        }
     }
 }

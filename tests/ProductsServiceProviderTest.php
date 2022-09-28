@@ -1,18 +1,25 @@
 <?php
 
-use Illuminate\Database\Migrations\Migrator;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Database\Migrations\Migrator;
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Events\ProductCreatedEvent;
-use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Exceptions\NotAllowedTestingException;
-use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Listeners\WorkWhenProductCreatedListener;
-use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Contracts\CreateProductInterface;
 use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\DataTransferObjects\ProductData;
+use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Contracts\CreateProductInterface;
+use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Exceptions\NotAllowedTestingException;
+use KEERill\ServiceStructure\Tests\Classes\Services\Products\Domain\Subservices\Sub\AnnotationProductsSubservice;
+use KEERill\ServiceStructure\Tests\Classes\Services\Products\Infrastructure\Contracts\AnnotationProductInterface;
+use KEERill\ServiceStructure\Tests\Classes\Services\Products\Application\Listeners\WorkWhenProductCreatedListener;
 use function Pest\Laravel\get;
 
 it('get replace subservice into testing subservices', function () {
     app(CreateProductInterface::class)
         ->createProduct(new ProductData(1, 'Test product'));
 })->throws(NotAllowedTestingException::class);
+
+it('register service by annotations', function () {
+   expect(app(AnnotationProductInterface::class))
+       ->toBeInstanceOf(AnnotationProductsSubservice::class);
+});
 
 it('check apply service migrations', function () {
     /** @var Migrator $migrator */
