@@ -13,6 +13,10 @@ You can install the package via composer:
 composer require keerill/laravel-services-structure
 ```
 
+## Usage
+
+Example usage this package [on Github](https://github.com/kEERill/laravel-microservice-template)
+
 ## Testing
 
 ```bash
