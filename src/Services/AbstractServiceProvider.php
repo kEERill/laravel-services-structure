@@ -5,11 +5,9 @@ namespace KEERill\ServiceStructure\Services;
 use ReflectionClass;
 use ReflectionException;
 use Illuminate\Support\Str;
-use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use KEERill\ServiceStructure\Actions\ActionRegistrar;
-use KEERill\ServiceStructure\Actions\ClassActionAttribute;
 
 abstract class AbstractServiceProvider extends ServiceProvider
 {
